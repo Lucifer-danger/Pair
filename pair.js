@@ -1,4 +1,3 @@
-
 import express from "express";
 import fs from "fs";
 import pino from "pino";
@@ -12,7 +11,7 @@ import {
     fetchLatestBaileysVersion,
 } from "@whiskeysockets/baileys";
 import pn from "awesome-phonenumber";
-import { upload } from "./mega.js";
+import { upload } from "./mega.js"; // ඔයාගේ mega logic එක පාවිච්චි කරනවා
 
 const router = express.Router();
 
@@ -25,9 +24,9 @@ function removeFile(FilePath) {
     }
 }
 
+// Mega link එකෙන් ID එක විතරක් වෙන් කරගන්න logic එක
 function getMegaFileId(url) {
     try {
-        // Extract everything after /file/ including the key
         const match = url.match(/\/file\/([^#]+#[^\/]+)/);
         return match ? match[1] : null;
     } catch (error) {
@@ -47,167 +46,92 @@ router.get("/", async (req, res) => {
     if (!phone.isValid()) {
         if (!res.headersSent) {
             return res.status(400).send({
-                code: "Invalid phone number. Please enter your full international number (e.g., 15551234567 for US, 447911123456 for UK, 84987654321 for Vietnam, etc.) without + or spaces.",
+                code: "Invalid phone number. Please enter your full international number (e.g. 94771234567)",
             });
         }
-        return;
     }
-    num = phone.getNumber("e164").replace("+", "");
 
     async function initiateSession() {
         const { state, saveCreds } = await useMultiFileAuthState(dirs);
+        const { version } = await fetchLatestBaileysVersion();
 
         try {
-            const { version, isLatest } = await fetchLatestBaileysVersion();
-            let KnightBot = makeWASocket({
-                version,
+            const KnightBot = makeWASocket({
                 auth: {
                     creds: state.creds,
-                    keys: makeCacheableSignalKeyStore(
-                        state.keys,
-                        pino({ level: "fatal" }).child({ level: "fatal" }),
-                    ),
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "silent" })),
                 },
                 printQRInTerminal: false,
-                logger: pino({ level: "fatal" }).child({ level: "fatal" }),
-                browser: Browsers.windows("Chrome"),
-                markOnlineOnConnect: false,
-                generateHighQualityLinkPreview: false,
-                defaultQueryTimeoutMs: 60000,
-                connectTimeoutMs: 60000,
-                keepAliveIntervalMs: 30000,
-                retryRequestDelayMs: 250,
-                maxRetries: 5,
+                logger: pino({ level: "silent" }),
+                browser: Browsers.macOS("Safari"), // Pairing code එකට හොඳම මේක
+                version,
             });
 
-            KnightBot.ev.on("connection.update", async (update) => {
-                const { connection, lastDisconnect, isNewLogin, isOnline } =
-                    update;
+            // Pairing Code එක Request කිරීම
+            if (!KnightBot.authState.creds.registered) {
+                await delay(1500);
+                const code = await KnightBot.requestPairingCode(num);
+                if (!res.headersSent) {
+                    res.send({ code: code });
+                }
+            }
+
+            // --- [මෙතන තමයි වැදගත්ම FIX එක තියෙන්නේ] ---
+            KnightBot.ev.on("connection.update", async (s) => {
+                const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
-                    console.log("✅ Connected successfully!");
-                    console.log("📱 Uploading session to MEGA...");
+                    console.log("Connected successfully to WhatsApp!");
+                    await delay(10000); // Creds හරි හැටි save වෙන්න වෙලාව දෙනවා
 
                     try {
                         const credsPath = dirs + "/creds.json";
-                        const megaUrl = await upload(
-                            credsPath,
-                            `creds_${num}_${Date.now()}.json`,
-                        );
-                        const megaFileId = getMegaFileId(megaUrl);
+                        
+                        // 1. Mega එකට upload කිරීම
+                        const megaUrl = await upload(credsPath, "creds.json");
+                        
+                        // 2. Session ID එක සකස් කිරීම
+                        const rawId = getMegaFileId(megaUrl);
+                        const sessionId = Buffer.from(rawId).toString("base64");
+                        
+                        const sessionFinal = `DRAC-MD;;${sessionId}`;
+                        
+                        const msgBody = `✅ *DRAC-MD SESSION CONNECTED*\n\n*Session ID:* \n\n${sessionFinal}\n\n> *ඔයාගේ මේ Session ID එක කාටවත් දෙන්න එපා.*`;
 
-                        if (megaFileId) {
-                            console.log(
-                                "✅ Session uploaded to MEGA. File ID:",
-                                megaFileId,
-                            );
+                        // 3. තමන්ටම මැසේජ් එකක් යැවීම
+                        await KnightBot.sendMessage(KnightBot.user.id, { text: msgBody });
+                        
+                        console.log("Session ID sent to WhatsApp!");
 
-                            const userJid = jidNormalizedUser(
-                                num + "@s.whatsapp.net",
-                            );
-                            await KnightBot.sendMessage(userJid, {
-                                text: `${megaFileId}`,
-                            });
-                            console.log("📄 MEGA file ID sent successfully");
-                        } else {
-                            console.log("❌ Failed to upload to MEGA");
-                        }
-
-                        console.log("🧹 Cleaning up session...");
-                        await delay(1000);
-                        removeFile(dirs);
-                        console.log("✅ Session cleaned up successfully");
-                        console.log("🎉 Process completed successfully!");
-
-                        console.log("🛑 Shutting down application...");
+                        // 4. Cleanup
                         await delay(2000);
-                        process.exit(0);
-                    } catch (error) {
-                        console.error("❌ Error uploading to MEGA:", error);
                         removeFile(dirs);
-                        await delay(2000);
-                        process.exit(1);
+                        // process.exit(0); // අවශ්‍ය නම් පමණක් පාවිච්චි කරන්න
+
+                    } catch (err) {
+                        console.error("Mega upload or message error:", err);
                     }
                 }
 
-                if (isNewLogin) {
-                    console.log("🔐 New login via pair code");
-                }
-
-                if (isOnline) {
-                    console.log("📶 Client is online");
-                }
-
                 if (connection === "close") {
-                    const statusCode =
-                        lastDisconnect?.error?.output?.statusCode;
-
-                    if (statusCode === 401) {
-                        console.log(
-                            "❌ Logged out from WhatsApp. Need to generate new pair code.",
-                        );
-                    } else {
-                        console.log("🔁 Connection closed — restarting...");
+                    const reason = lastDisconnect?.error?.output?.statusCode;
+                    if (reason !== 401) { // 401 කියන්නේ logout වීම, එහෙම නැත්නම් ආයෙත් reconnect වෙනවා
                         initiateSession();
                     }
                 }
             });
 
-            if (!KnightBot.authState.creds.registered) {
-                await delay(3000); // Wait 3 seconds before requesting pairing code
-                num = num.replace(/[^\d+]/g, "");
-                if (num.startsWith("+")) num = num.substring(1);
-
-                try {
-                    let code = await KnightBot.requestPairingCode(num);
-                    code = code?.match(/.{1,4}/g)?.join("-") || code;
-                    if (!res.headersSent) {
-                        console.log({ num, code });
-                        await res.send({ code });
-                    }
-                } catch (error) {
-                    console.error("Error requesting pairing code:", error);
-                    if (!res.headersSent) {
-                        res.status(503).send({
-                            code: "Failed to get pairing code. Please check your phone number and try again.",
-                        });
-                    }
-                    setTimeout(() => process.exit(1), 2000);
-                }
-            }
-
             KnightBot.ev.on("creds.update", saveCreds);
+
         } catch (err) {
             console.error("Error initializing session:", err);
             if (!res.headersSent) {
                 res.status(503).send({ code: "Service Unavailable" });
             }
-            setTimeout(() => process.exit(1), 2000);
         }
     }
 
     await initiateSession();
 });
 
-process.on("uncaughtException", (err) => {
-    let e = String(err);
-    if (e.includes("conflict")) return;
-    if (e.includes("not-authorized")) return;
-    if (e.includes("Socket connection timeout")) return;
-    if (e.includes("rate-overlimit")) return;
-    if (e.includes("Connection Closed")) return;
-    if (e.includes("Timed Out")) return;
-    if (e.includes("Value not found")) return;
-    if (
-        e.includes("Stream Errored") ||
-        e.includes("Stream Errored (restart required)")
-    )
-        return;
-    if (e.includes("statusCode: 515") || e.includes("statusCode: 503")) return;
-    console.log("Caught exception: ", err);
-    process.exit(1);
-});
-
 export default router;
-
-  
