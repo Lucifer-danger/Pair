@@ -16,16 +16,17 @@
   "license": "ISC",
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
-    "awesome-phonenumber": "latest",
-    "body-parser": "latest",
-    "express": "latest",
-    "megajs": "latest",
-    "path": "latest",
-    "phone": "latest",
-    "pino": "latest",
-    "qrcode": "latest",
-    "qrcode-terminal": "latest"
+    "awesome-phonenumber": "^7.2.0",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "megajs": "^1.3.9",
+    "path": "^0.12.7",
+    "phone": "^3.1.55",
+    "pino": "^9.5.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0"
   }
 }
+
 
   
