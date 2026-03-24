@@ -4,336 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DANUWA-MD SESSION</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-      :root {
-        --primary-color: #000000;
-        --secondary-color: #ffffff;
-        --accent-color: #f0f0f0;
-        --text-color: #000000;
-        --background-color: #ffffff;
-        --hover-color: #f5f5f5;
-        --border-color: rgba(0, 0, 0, 0.1);
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Inter", sans-serif;
-        background: var(--background-color);
-        color: var(--text-color);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 15px;
-      }
-
-      .container {
-        width: 100%;
-        max-width: 450px;
-        background: var(--background-color);
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        border: 1px solid var(--border-color);
-      }
-
-      .header {
-        text-align: center;
-        margin-bottom: 25px;
-      }
-
-      .logo {
-        width: 70px;
-        height: 70px;
-        margin: 0 auto 16px;
-        background: var(--primary-color);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        color: white;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .title {
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 8px;
-        color: var(--primary-color);
-      }
-
-      .subtitle {
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.7);
-        margin-bottom: 20px;
-      }
-
-      .toggle-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        background: var(--hover-color);
-        border-radius: 12px;
-        padding: 4px;
-        border: 1px solid var(--border-color);
-      }
-
-      .toggle-option {
-        flex: 1;
-        padding: 10px 16px;
-        text-align: center;
-        cursor: pointer;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-      }
-
-      .toggle-option.active {
-        background: var(--primary-color);
-        color: var(--secondary-color);
-      }
-
-      .toggle-option:not(.active) {
-        color: var(--text-color);
-      }
-
-      .toggle-option:hover:not(.active) {
-        background: var(--background-color);
-      }
-
-      .loading {
-        display: none;
-        text-align: center;
-        margin: 30px 0;
-      }
-
-      .loading i {
-        font-size: 48px;
-        color: var(--primary-color);
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      .qr-display {
-        background: var(--hover-color);
-        padding: 30px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 16px;
-        border: 1.5px solid var(--border-color);
-        display: none;
-      }
-
-      .qr-image {
-        max-width: 280px;
-        max-height: 280px;
-        margin: 0 auto 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      }
-
-      .qr-instructions {
-        font-size: 13px;
-        color: rgba(0, 0, 0, 0.7);
-        line-height: 1.8;
-      }
-
-      .copy-btn {
-        width: 100%;
-        padding: 12px;
-        background: var(--hover-color);
-        border: 1.5px solid var(--border-color);
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-      }
-
-      .copy-btn:hover {
-        background: var(--background-color);
-        border-color: var(--primary-color);
-      }
-
-      .error-message {
-        color: #e74c3c;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        font-size: 14px;
-        padding: 15px;
-        background: #fadbd8;
-        border-radius: 12px;
-        margin: 16px 0;
-      }
-
-      .success-message {
-        color: #27ae60;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        font-size: 14px;
-        padding: 15px;
-        background: #d5f4e6;
-        border-radius: 12px;
-        margin: 16px 0;
-      }
-
-      .footer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.5);
-      }
-
-      #statusMessage {
-        text-align: center;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.7);
-        margin: 20px 0;
-      }
+      :root { --primary-color: #000000; --background-color: #ffffff; --hover-color: #f5f5f5; --border-color: rgba(0, 0, 0, 0.1); }
+      body { font-family: "Inter", sans-serif; background: var(--background-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+      .container { width: 100%; max-width: 400px; padding: 25px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid var(--border-color); text-align: center; }
+      input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; text-align: center; font-size: 16px; }
+      button { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+      #codeDisplay { font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0; color: #27ae60; display: none; }
+      .loading { display: none; margin: 20px 0; }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <div class="logo"><i class="fas fa-robot"></i></div>
-        <h1 class="title">DANUWA-MD</h1>
-        <p class="subtitle">Link your WhatsApp device</p>
-      </div>
+      <div class="logo" style="font-size: 40px;"><i class="fas fa-robot"></i></div>
+      <h2>DANUWA-MD</h2>
+      <p>Enter number with country code (e.g. 94712345678)</p>
+      
+      <input type="number" id="phoneNumber" placeholder="947xxxxxxxx" />
+      <button onclick="generatePairingCode()">Get Pairing Code</button>
 
-      <!-- Toggle Switch -->
-      <div class="toggle-container">
-        <div class="toggle-option active" data-mode="pair">
-          <i class="fas fa-key"></i> Pair (QR)
-        </div>
-        <div class="toggle-option" data-mode="qr">
-          <i class="fas fa-qrcode"></i> QR Code
-        </div>
-      </div>
-
-      <div id="statusMessage"></div>
-      <div class="loading" id="loading">
-        <i class="fas fa-spinner"></i>
-      </div>
-
-      <div class="qr-display" id="qrDisplay">
-        <img id="qrImage" class="qr-image" src="" alt="QR Code" />
-        <div class="qr-instructions" id="qrInstructions">
-          1. Open WhatsApp on your phone<br/>
-          2. Go to Settings > Linked Devices<br/>
-          3. Tap "Link a Device"<br/>
-          4. Scan the QR code above
-        </div>
-      </div>
-
-      <button class="copy-btn" id="copy" onclick="copyCode()" style="display: none;">
-        <i class="fas fa-copy"></i> Copy Session ID
-      </button>
-
-      <div class="footer">
-        <p>© 2025 DANUWA-MD. All rights reserved.</p>
-      </div>
+      <div class="loading" id="loading"><i class="fas fa-spinner fa-spin"></i> Requesting...</div>
+      <div id="codeDisplay"></div>
+      <div id="status"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
     <script>
-      let currentMode = "pair";
-
-      // Toggle functionality
-      document.querySelectorAll(".toggle-option").forEach((option) => {
-        option.addEventListener("click", function () {
-          const mode = this.dataset.mode;
-          if (mode === currentMode) return;
-
-          document.querySelectorAll(".toggle-option").forEach((opt) => opt.classList.remove("active"));
-          this.classList.add("active");
-          currentMode = mode;
-
-          document.getElementById("qrDisplay").style.display = "none";
-          document.getElementById("statusMessage").innerHTML = "";
-          document.getElementById("copy").style.display = "none";
-
-          if (mode === "pair") {
-            document.getElementById("statusMessage").innerHTML = '<div class="success-message"><i class="fas fa-info-circle"></i> Click below to generate QR code</div>';
-            generateCode();
-          } else {
-            generateCode();
-          }
-        });
-      });
-
-      async function generateCode() {
-        const statusDiv = document.getElementById("statusMessage");
+      async function generatePairingCode() {
+        const number = document.getElementById("phoneNumber").value;
+        const codeDisplay = document.getElementById("codeDisplay");
+        const status = document.getElementById("status");
         const loading = document.getElementById("loading");
-        const qrDisplay = document.getElementById("qrDisplay");
 
-        statusDiv.innerHTML = "";
+        if (!number) return alert("Please enter your phone number!");
+
         loading.style.display = "block";
-        qrDisplay.style.display = "none";
+        codeDisplay.style.display = "none";
+        status.innerHTML = "";
 
         try {
-          const endpoint = currentMode === "pair" ? "/pair?number=default" : "/qr";
-          const response = await axios(endpoint);
-
-          if (response.data.qr) {
-            document.getElementById("qrImage").src = response.data.qr;
-            
-            if (response.data.instructions) {
-              document.getElementById("qrInstructions").innerHTML = response.data.instructions.join("<br/>");
-            }
-
-            qrDisplay.style.display = "block";
-            statusDiv.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> QR Code generated! Scan with WhatsApp</div>';
-            document.getElementById("copy").style.display = "flex";
-          } else {
-            statusDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Failed to generate QR code</div>';
+          const response = await axios.get(`/pair?number=${number}`);
+          if (response.data.code) {
+            codeDisplay.innerText = response.data.code;
+            codeDisplay.style.display = "block";
+            status.innerHTML = "<p style='color:green'>Enter this code on your phone's Linked Devices menu.</p>";
           }
         } catch (error) {
-          console.error("Error:", error);
-          statusDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating QR. Try again.</div>';
+          status.innerHTML = "<p style='color:red'>Error: " + (error.response?.data?.error || "Connection failed") + "</p>";
         } finally {
           loading.style.display = "none";
         }
-      }
-
-      // Auto-generate on page load
-      generateCode();
-
-      function copyCode() {
-        const codeDisplay = document.getElementById("qrImage").src;
-        navigator.clipboard.writeText(codeDisplay).then(() => {
-          const copyBtn = document.getElementById("copy");
-          const originalText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-          setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-          }, 2000);
-        }).catch(() => {
-          alert("Failed to copy");
-        });
       }
     </script>
   </body>
