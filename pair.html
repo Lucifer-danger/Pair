@@ -78,45 +78,6 @@
         margin-bottom: 20px;
       }
 
-      .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-
-      .social-icons a {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 18px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .social-icons a.youtube {
-        background: #ff0000;
-      }
-      .social-icons a.telegram {
-        background: #0088cc;
-      }
-      .social-icons a.whatsapp {
-        background: #0cfa10;
-      }
-      .social-icons a.github {
-        background: #333;
-      }
-
-      .social-icons a:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-
-      /* Toggle Switch Styles */
       .toggle-container {
         display: flex;
         align-items: center;
@@ -137,7 +98,6 @@
         font-size: 14px;
         font-weight: 500;
         transition: all 0.3s ease;
-        position: relative;
       }
 
       .toggle-option.active {
@@ -152,94 +112,22 @@
       .toggle-option:hover:not(.active) {
         background: var(--background-color);
       }
-      .copy-btn {
-        width: 100%;
-        padding: 12px;
-        background: var(--hover-color);
-        border: 1.5px solid var(--border-color);
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
 
-      .copy-btn:hover {
-        background: var(--background-color);
-        border-color: var(--primary-color);
-      }
-
-      .input-group {
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-      }
-
-      .input-group.hidden {
+      .loading {
         display: none;
-      }
-
-      .input-label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        font-size: 13px;
-      }
-
-      .input-field {
-        width: 100%;
-        padding: 12px;
-        border: 1.5px solid var(--border-color);
-        border-radius: 12px;
-        background: var(--background-color);
-        color: var(--text-color);
-        font-size: 15px;
-      }
-
-      .input-field:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-      }
-
-      .generate-btn {
-        width: 100%;
-        padding: 12px;
-        background: var(--primary-color);
-        border: none;
-        border-radius: 12px;
-        color: var(--secondary-color);
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-bottom: 16px;
-      }
-
-      .generate-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .generate-btn.hidden {
-        display: none;
-      }
-
-      .code-display {
-        background: var(--hover-color);
-        padding: 12px;
-        border-radius: 12px;
         text-align: center;
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 16px;
-        min-height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1.5px solid var(--border-color);
+        margin: 30px 0;
+      }
+
+      .loading i {
+        font-size: 48px;
+        color: var(--primary-color);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
       .qr-display {
@@ -263,16 +151,28 @@
       .qr-instructions {
         font-size: 13px;
         color: rgba(0, 0, 0, 0.7);
-        line-height: 1.5;
+        line-height: 1.8;
       }
 
-      .success-message {
-        color: #000aff;
+      .copy-btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--hover-color);
+        border: 1.5px solid var(--border-color);
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .copy-btn:hover {
+        background: var(--background-color);
+        border-color: var(--primary-color);
       }
 
       .error-message {
@@ -282,27 +182,23 @@
         justify-content: center;
         gap: 8px;
         font-size: 14px;
-      }
-
-      .loading {
-        display: none;
-        text-align: center;
+        padding: 15px;
+        background: #fadbd8;
+        border-radius: 12px;
         margin: 16px 0;
       }
 
-      .loading i {
-        font-size: 24px;
-        color: var(--primary-color);
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
+      .success-message {
+        color: #27ae60;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        padding: 15px;
+        background: #d5f4e6;
+        border-radius: 12px;
+        margin: 16px 0;
       }
 
       .footer {
@@ -312,26 +208,11 @@
         color: rgba(0, 0, 0, 0.5);
       }
 
-      @media (max-width: 480px) {
-        .container {
-          padding: 20px;
-          border-radius: 12px;
-          max-width: 400px;
-        }
-
-        .code-display {
-          font-size: 16px;
-          min-height: 50px;
-        }
-
-        .qr-image {
-          max-width: 240px;
-          max-height: 240px;
-        }
-
-        .qr-display {
-          padding: 20px;
-        }
+      #statusMessage {
+        text-align: center;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 20px 0;
       }
     </style>
   </head>
@@ -341,76 +222,35 @@
         <div class="logo"><i class="fas fa-robot"></i></div>
         <h1 class="title">DANUWA-MD</h1>
         <p class="subtitle">Link your WhatsApp device</p>
-        <div class="social-icons">
-          <a
-            href=""
-            target="_blank"
-            class="youtube"
-            ><i class="fab fa-youtube"></i
-          ></a>
-          <a
-            href=""
-            target="_blank"
-            class="telegram"
-            ><i class="fab fa-facebook"></i
-          ></a>
-          <a href="" target="_blank" class="whatsapp"
-            ><i class="fab fa-whatsapp"></i
-          ></a>
-          <a
-            href=""
-            target="_blank"
-            class="github"
-            ><i class="fab fa-github"></i
-          ></a>
-        </div>
       </div>
 
       <!-- Toggle Switch -->
       <div class="toggle-container">
         <div class="toggle-option active" data-mode="pair">
-          <i class="fas fa-key"></i> Pair Code
+          <i class="fas fa-key"></i> Pair (QR)
         </div>
         <div class="toggle-option" data-mode="qr">
           <i class="fas fa-qrcode"></i> QR Code
         </div>
       </div>
 
-      <div class="input-group" id="inputGroup">
-        <label class="input-label"
-          >Enter your WhatsApp number with country code</label
-        >
-        <input
-          type="text"
-          id="mobileNumber"
-          class="input-field"
-          placeholder="+94774915917"
-          pattern="[+][0-9]{10,}"
-          title="Please enter country code starting with + followed by number"
-        />
-      </div>
-
-      <button class="generate-btn" id="submit">
-        <i class="fas fa-key"></i> Generate Pair Code
-      </button>
-
+      <div id="statusMessage"></div>
       <div class="loading" id="loading">
         <i class="fas fa-spinner"></i>
-      </div>
-
-      <div class="code-display" id="codeDisplay">
-        Your pair code will appear here
       </div>
 
       <div class="qr-display" id="qrDisplay">
         <img id="qrImage" class="qr-image" src="" alt="QR Code" />
         <div class="qr-instructions" id="qrInstructions">
-          Scan this QR code with your WhatsApp app
+          1. Open WhatsApp on your phone<br/>
+          2. Go to Settings > Linked Devices<br/>
+          3. Tap "Link a Device"<br/>
+          4. Scan the QR code above
         </div>
       </div>
 
-      <button class="copy-btn" id="copy" onclick="copyCode()">
-        <i class="fas fa-copy"></i> Copy Code
+      <button class="copy-btn" id="copy" onclick="copyCode()" style="display: none;">
+        <i class="fas fa-copy"></i> Copy Session ID
       </button>
 
       <div class="footer">
@@ -428,129 +268,72 @@
           const mode = this.dataset.mode;
           if (mode === currentMode) return;
 
-          // Update active state
-          document
-            .querySelectorAll(".toggle-option")
-            .forEach((opt) => opt.classList.remove("active"));
+          document.querySelectorAll(".toggle-option").forEach((opt) => opt.classList.remove("active"));
           this.classList.add("active");
-
-          // Update mode
           currentMode = mode;
 
-          // Update button and input visibility
-          const submitBtn = document.getElementById("submit");
-          const inputGroup = document.getElementById("inputGroup");
+          document.getElementById("qrDisplay").style.display = "none";
+          document.getElementById("statusMessage").innerHTML = "";
+          document.getElementById("copy").style.display = "none";
 
           if (mode === "pair") {
-            submitBtn.innerHTML =
-              '<i class="fas fa-key"></i> Generate Pair Code';
-            submitBtn.classList.remove("hidden");
-            inputGroup.classList.remove("hidden");
+            document.getElementById("statusMessage").innerHTML = '<div class="success-message"><i class="fas fa-info-circle"></i> Click below to generate QR code</div>';
+            generateCode();
           } else {
-            submitBtn.classList.add("hidden");
-            inputGroup.classList.add("hidden");
-            // Auto-generate QR code when QR mode is selected
-            generateQRCode();
+            generateCode();
           }
-
-          // Clear displays
-          document.getElementById("codeDisplay").innerHTML =
-            "Your pair code will appear here";
-          document.getElementById("qrDisplay").style.display = "none";
-          document.getElementById("codeDisplay").style.display = "flex";
         });
       });
 
-      async function generateQRCode() {
-        const codeDisplay = document.getElementById("codeDisplay");
+      async function generateCode() {
+        const statusDiv = document.getElementById("statusMessage");
+        const loading = document.getElementById("loading");
         const qrDisplay = document.getElementById("qrDisplay");
-        const loadingSpinner = document.getElementById("loading");
 
-        loadingSpinner.style.display = "block";
-        codeDisplay.innerHTML = "";
+        statusDiv.innerHTML = "";
+        loading.style.display = "block";
         qrDisplay.style.display = "none";
 
         try {
-          const response = await axios("/qr");
+          const endpoint = currentMode === "pair" ? "/pair?number=default" : "/qr";
+          const response = await axios(endpoint);
 
           if (response.data.qr) {
             document.getElementById("qrImage").src = response.data.qr;
-            document.getElementById("qrInstructions").innerHTML =
-              response.data.instructions.join("<br>");
+            
+            if (response.data.instructions) {
+              document.getElementById("qrInstructions").innerHTML = response.data.instructions.join("<br/>");
+            }
+
             qrDisplay.style.display = "block";
-            codeDisplay.style.display = "none";
+            statusDiv.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> QR Code generated! Scan with WhatsApp</div>';
+            document.getElementById("copy").style.display = "flex";
           } else {
-            codeDisplay.innerHTML =
-              '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Failed to generate QR code</div>';
-            codeDisplay.style.display = "flex";
+            statusDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Failed to generate QR code</div>';
           }
         } catch (error) {
-          console.error("Error generating QR code:", error);
-          codeDisplay.innerHTML =
-            '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating QR code. Please try again.</div>';
-          codeDisplay.style.display = "flex";
+          console.error("Error:", error);
+          statusDiv.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating QR. Try again.</div>';
         } finally {
-          loadingSpinner.style.display = "none";
+          loading.style.display = "none";
         }
       }
 
-      document.getElementById("submit").addEventListener("click", async (e) => {
-        e.preventDefault();
+      // Auto-generate on page load
+      generateCode();
 
-        const mobileNumberInput = document.getElementById("mobileNumber");
-        const codeDisplay = document.getElementById("codeDisplay");
-        const qrDisplay = document.getElementById("qrDisplay");
-        const loadingSpinner = document.getElementById("loading");
-
-        const mobileNumber = mobileNumberInput.value.trim();
-        if (!mobileNumber) {
-          codeDisplay.innerHTML =
-            '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
-          return;
-        }
-
-        loadingSpinner.style.display = "block";
-        codeDisplay.innerHTML = "";
-        qrDisplay.style.display = "none";
-
-        try {
-          const response = await axios(
-            `/pair?number=${mobileNumber.replace(/[^0-9]/g, "")}`,
-          );
-
-          const code = response.data.code || "Service Unavailable";
-          if (code === "Service Unavailable") {
-            codeDisplay.innerHTML =
-              '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
-          } else {
-            codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
-          }
-          codeDisplay.style.display = "flex";
-        } catch (error) {
-          console.error("Error generating code:", error);
-          codeDisplay.innerHTML =
-            '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code. Please try again.</div>';
-          codeDisplay.style.display = "flex";
-        } finally {
-          loadingSpinner.style.display = "none";
-        }
-      });
       function copyCode() {
-        const codeDisplay = document.getElementById("codeDisplay").innerText;
-        const code = codeDisplay.replace("CODE: ", "");
-        navigator.clipboard
-          .writeText(code)
-          .then(() => {
-            const copyBtn = document.getElementById("copy");
-            const originalText = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => {
-              copyBtn.innerHTML = originalText;
-            }, 2000);
-          })
-          .catch((err) => {
-            console.error("Failed to copy text: ", err);
-          });
+        const codeDisplay = document.getElementById("qrImage").src;
+        navigator.clipboard.writeText(codeDisplay).then(() => {
+          const copyBtn = document.getElementById("copy");
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+          }, 2000);
+        }).catch(() => {
+          alert("Failed to copy");
+        });
       }
     </script>
   </body>
